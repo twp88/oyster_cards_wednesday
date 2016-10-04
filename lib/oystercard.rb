@@ -10,11 +10,15 @@ class Oystercard
 
   def top_up(amount)
     amount = amount.to_i
-    fail "Cannot top-up more than 90" if (@balance + amount) > @limit
+    fail "Total balance should not be more than 90" if (@balance + amount) > @limit
     @balance += amount
   end
 
-end
 
-# private
-# attr_reader :balance
+
+
+def deduct_balance(amount)
+  amount = amount.to_i
+  @balance -= amount
+end
+end

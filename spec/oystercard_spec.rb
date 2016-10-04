@@ -35,8 +35,15 @@ describe Oystercard do
       it "raises and error if balance is more than 90" do
         amount = 100
         #oystercard.top_up(100)
-          expect{oystercard.top_up(amount)}.to raise_error "Cannot top-up more than 90" if oystercard.balance >= oystercard.limit
+          expect{oystercard.top_up(amount)}.to raise_error "Total balance should not be more than 90" if oystercard.balance >= oystercard.limit
       end
     end
+
+  describe "#deduct_balance" do
+
+    it "deducts an aount from the standing balance" do
+      expect{oystercard.deduct_balance(20)}.to change {subject.balance}.by -20
+  end
+end
 
 end
