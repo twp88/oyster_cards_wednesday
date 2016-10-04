@@ -35,13 +35,6 @@ describe Oystercard do
         amount = 100
           expect{oystercard.top_up(amount)}.to raise_error "Total balance should not be more than 90"
       end
-    end
-
-  describe "#deduct_balance" do
-
-    it "deducts an amount from the standing balance" do
-      expect{oystercard.deduct_balance(20)}.to change {subject.balance}.by -20
-  end
 end
 
 describe '#touch_in' do
@@ -62,14 +55,24 @@ end
   end
 end
 
+describe "#deduct_balance" do
+  it "deducts an amount from the standing balance" do
+    expect{oystercard.deduct_balance(20)}.to change {subject.balance}.by -20
+  end
+end
+
 describe '#touch_out' do
   it "allows a user to touch out at a station" do
     oystercard.touch_in
     oystercard.touch_out
     expect(oystercard.in_use).to eq false
   end
+
+  it "uses the deduct method to deduct the minimum fare when you touch out" do
+    expect{oystercard.touch_out}.to change {subject.balance}.by -1
+  end
 end
 
-
+change
 
 end
