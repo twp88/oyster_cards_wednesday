@@ -26,7 +26,7 @@ class Oystercard
 
   def touch_out
     @in_use = false
-    deduct_balance(1)
+    deduct_balance(1) ....
   end
 
   def in_journey?
