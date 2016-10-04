@@ -5,7 +5,7 @@ describe Oystercard do
 
   describe "#balance" do
 
-    it "expects a default balance of 0" do
+    it "expects a default balance of 5" do
       expect(oystercard.balance).to eq Oystercard::DEFAULT_BALANCE
     end
 
@@ -17,7 +17,7 @@ describe Oystercard do
 
   describe "#top_up" do
     before do
-      @balance = 0
+      @balance = 5
     end
 
     it "allows the card to top-up certain amount" do
@@ -50,11 +50,16 @@ describe '#touch_in' do
     expect(oystercard.in_use).to eq true
   end
 
-  it  "tests to see if passenger is in jounery" do
+  it  "tests to see if passenger is in journey" do
     oystercard.touch_in
     oystercard.in_journey?
     expect(oystercard.in_use).to eq true
 end
+
+  it "does not allow to touch in when balance is less than £1" do
+    oyster1 = Oystercard.new(0)
+    expect{oyster1.touch_in}.to raise_error "Not enough funds"
+  end
 end
 
 describe '#touch_out' do

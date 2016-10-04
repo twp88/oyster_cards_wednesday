@@ -1,6 +1,6 @@
 class Oystercard
   attr_reader :balance, :limit, :in_use
-  DEFAULT_BALANCE = 0
+  DEFAULT_BALANCE = 5
   BALANCE_LIMIT = 90
 
 
@@ -17,7 +17,11 @@ class Oystercard
   end
 
   def touch_in
-    @in_use = true
+    if @balance < 1
+      raise "Not enough funds"
+    else
+      @in_use = true
+    end
   end
 
   def touch_out
@@ -27,7 +31,8 @@ class Oystercard
   def in_journey?
     @in_use
   end
-  
+
+
 def deduct_balance(amount)
   amount = amount.to_i
   @balance -= amount
