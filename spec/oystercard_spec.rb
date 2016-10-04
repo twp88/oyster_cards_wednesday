@@ -57,7 +57,7 @@ end
 
   it "saves the origin station" do
     oystercard.touch_in
-    expect(oystercard.stations.length).to eq 1
+    expect(oystercard.stations).not_to eq nil
   end
 end
 
@@ -77,7 +77,12 @@ describe '#touch_out' do
   it "uses the deduct method to deduct the minimum fare when you touch out" do
     expect{oystercard.touch_out}.to change {subject.balance}.by -1
   end
-end
 
+  it "expects the length to change by -1" do
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard.stations).to eq ""
+end
+end
 
 end
