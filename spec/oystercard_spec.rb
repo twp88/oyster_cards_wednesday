@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   subject(:oystercard) {described_class.new}
+  let(:awesome_coffwee) {double :station}
 
   describe "#balance" do
 
@@ -53,6 +54,11 @@ end
     oyster1 = Oystercard.new(0)
     expect{oyster1.touch_in}.to raise_error "Not enough funds"
   end
+
+  it "saves the origin station" do
+    oystercard.touch_in
+    expect(oystercard.stations.length).to eq 1
+  end
 end
 
 describe "#deduct_balance" do
@@ -73,6 +79,5 @@ describe '#touch_out' do
   end
 end
 
-change
 
 end

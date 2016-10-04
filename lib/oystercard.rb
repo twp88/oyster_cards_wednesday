@@ -1,5 +1,5 @@
 class Oystercard
-  attr_reader :balance, :limit, :in_use
+  attr_reader :balance, :limit, :in_use, :stations
   DEFAULT_BALANCE = 5
   BALANCE_LIMIT = 90
 
@@ -8,6 +8,7 @@ class Oystercard
     @balance = balance
     @limit = BALANCE_LIMIT
     @in_use = false
+    @stations = []
   end
 
   def top_up(amount)
@@ -21,12 +22,13 @@ class Oystercard
       raise "Not enough funds"
     else
       @in_use = true
+      @stations << :awesome_coffwee 
     end
   end
 
   def touch_out
     @in_use = false
-    deduct_balance(1) ....
+    deduct_balance(1)
   end
 
   def in_journey?
