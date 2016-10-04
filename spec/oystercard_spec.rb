@@ -49,6 +49,22 @@ describe '#touch_in' do
     oystercard.touch_in
     expect(oystercard.in_use).to eq true
   end
+
+  it  "tests to see if passenger is in jounery" do
+    oystercard.touch_in
+    oystercard.in_journey?
+    expect(oystercard.in_use).to eq true
 end
+end
+
+describe '#touch_out' do
+  it "allows a user to touch out at a station" do
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard.in_use).to eq false
+  end
+end
+
+
 
 end

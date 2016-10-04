@@ -20,6 +20,14 @@ class Oystercard
     @in_use = true
   end
 
+  def touch_out
+    @in_use = false
+  end
+
+  def in_journey?
+    @in_use
+  end
+  
 def deduct_balance(amount)
   amount = amount.to_i
   @balance -= amount
