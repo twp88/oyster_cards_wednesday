@@ -1,14 +1,15 @@
 class Oystercard
-  attr_reader :balance, :limit, :in_use, :entry_station, :station, :MINIMUM_FARE
+  attr_reader :balance, :limit, :in_use, :entry_station, :station, :MINIMUM_FARE, :journeys, :recorded_journeys
   DEFAULT_BALANCE = 5
   BALANCE_LIMIT = 90
   MINIMUM_FARE = 1
-
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
     @limit = BALANCE_LIMIT
     @entry_station = nil
+    @journeys = []
+    @recorded_journeys = {}
   end
 
   def top_up(amount)
@@ -21,11 +22,13 @@ class Oystercard
     raise "Card already in use, must touch out first" if in_journey? == true
     raise "Not enough funds" if @balance < 1
       @entry_station = :awesome_coffwee
+      @journeys << :awesome_coffwee
   end
 
   def touch_out(min_fare = MINIMUM_FARE)
     raise "Already touched out" if in_journey? == false
       @entry_station = nil
+      @journeys << :exit_station
       deduct_balance(min_fare)
   end
 

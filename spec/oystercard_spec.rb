@@ -3,6 +3,8 @@ require 'oystercard'
 describe Oystercard do
   subject(:oystercard) {described_class.new}
   let(:awesome_coffwee) {double :station}
+  let(:exit_station) {double :station}
+
 
 
   describe "#balance" do
@@ -59,9 +61,13 @@ end
     expect{oyster1.touch_in}.to raise_error "Not enough funds"
   end
 
-  it "saves the origin station" do
+  it "saves the entry station" do
     oystercard.touch_in
     expect(oystercard.entry_station).not_to eq nil
+  end
+
+  it "saves the entry station in an array" do
+    expect{ oystercard.touch_in}.to change{ oystercard.journeys.length }.by(1)
   end
 end
 
@@ -88,11 +94,17 @@ describe '#touch_out' do
     expect{oystercard.touch_out}.to change {subject.balance}.by -1
   end
 
-  it "expects the length to change by -1" do
+  it "saves the exit station in an array" do
     oystercard.touch_in
-    oystercard.touch_out
-    expect(oystercard.entry_station).to eq nil
-end
+    expect{ oystercard.touch_out }.to change{ oystercard.journeys.length }.by(1)
+  end
 end
 
+describe '#completed_journey' do
+  it "tests if we have a completed journey" do
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard.journeys.length).to eq(2)
+  end
+end
 end
