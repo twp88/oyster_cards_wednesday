@@ -63,7 +63,7 @@ end
 
 describe "#deduct_balance" do
   it "deducts an amount from the standing balance" do
-    expect{oystercard.deduct_balance(20)}.to change {subject.balance}.by -20
+    expect{oystercard.touch_out}.to change {subject.balance}.by -1
   end
 end
 
