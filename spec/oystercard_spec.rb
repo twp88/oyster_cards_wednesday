@@ -4,6 +4,7 @@ describe Oystercard do
   subject(:oystercard) {described_class.new}
   let(:awesome_coffwee) {double :station}
 
+
   describe "#balance" do
 
     it "expects a default balance of 5" do
@@ -44,6 +45,10 @@ describe '#touch_in' do
     expect(oystercard.in_use).to eq true
   end
 
+  it "raises an error if card is already in use" do
+    oystercard.touch_in
+    expect{ oystercard.touch_in }.to raise_error "Card already in use, must touch out first"
+  end
   it  "tests to see if passenger is in journey" do
     oystercard.touch_in
     oystercard.in_journey?
@@ -61,11 +66,11 @@ end
   end
 end
 
-describe "#deduct_balance" do
-  it "deducts an amount from the standing balance" do
-    expect{oystercard.touch_out}.to change {subject.balance}.by -1
-  end
-end
+# describe "#deduct_balance" do
+#   it "deducts an amount from the standing balance" do
+#     expect{ oystercard.touch_out }.to change {subject.balance}.by -1
+#   end
+# end
 
 describe '#touch_out' do
   it "allows a user to touch out at a station" do
@@ -74,7 +79,13 @@ describe '#touch_out' do
     expect(oystercard.in_use).to eq false
   end
 
+  it "raises an error if card is not in use" do
+    expect(oystercard.in_use).to eq false
+    expect{ oystercard.touch_out }.to raise_error "Already touched out"
+  end
+
   it "uses the deduct method to deduct the minimum fare when you touch out" do
+    oystercard.touch_in
     expect{oystercard.touch_out}.to change {subject.balance}.by -1
   end
 

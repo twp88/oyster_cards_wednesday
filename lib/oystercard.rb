@@ -19,18 +19,17 @@ class Oystercard
   end
 
   def touch_in
-    if @balance < 1
-      raise "Not enough funds"
-    else
+    raise "Card already in use, must touch out first" if @in_use == true
+    raise "Not enough funds" if @balance < 1
       @in_use = true
       @stations = :awesome_coffwee
-    end
   end
 
   def touch_out(min_fare = MINIMUM_FARE)
-    @in_use = false
-    @stations = ""
-    deduct_balance(min_fare)
+    raise "Already touched out" if @in_use == false
+      @in_use = false
+      @stations = ""
+      deduct_balance(min_fare)
   end
 
   def in_journey?
