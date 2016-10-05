@@ -62,7 +62,7 @@ end
 
   it "saves the origin station" do
     oystercard.touch_in
-    expect(oystercard.stations).not_to eq nil
+    expect(oystercard.entry_station).not_to eq ""
   end
 end
 
@@ -92,7 +92,7 @@ describe '#touch_out' do
   it "expects the length to change by -1" do
     oystercard.touch_in
     oystercard.touch_out
-    expect(oystercard.stations).to eq ""
+    expect(oystercard.entry_station).to eq ""
 end
 end
 
