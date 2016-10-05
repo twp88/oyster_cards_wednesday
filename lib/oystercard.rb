@@ -8,8 +8,7 @@ class Oystercard
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
     @limit = BALANCE_LIMIT
-    @in_use = false
-    @entry_station = ""
+    @entry_station = nil
   end
 
   def top_up(amount)
@@ -19,21 +18,20 @@ class Oystercard
   end
 
   def touch_in
-    raise "Card already in use, must touch out first" if @in_use == true
+    raise "Card already in use, must touch out first" if in_journey? == true
     raise "Not enough funds" if @balance < 1
-      @in_use = true
       @entry_station = :awesome_coffwee
   end
 
   def touch_out(min_fare = MINIMUM_FARE)
-    raise "Already touched out" if @in_use == false
-      @in_use = false
-      @entry_station = ""
+    raise "Already touched out" if in_journey? == false
+      @entry_station = nil
       deduct_balance(min_fare)
   end
 
   def in_journey?
-    @in_use
+    return true if @entry_station != nil
+      false
   end
 
 private

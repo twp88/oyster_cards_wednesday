@@ -42,7 +42,7 @@ end
 describe '#touch_in' do
   it "allows a user to touch in at a station" do
     oystercard.touch_in
-    expect(oystercard.in_use).to eq true
+    expect(oystercard.in_journey?).to eq true#
   end
 
   it "raises an error if card is already in use" do
@@ -51,8 +51,7 @@ describe '#touch_in' do
   end
   it  "tests to see if passenger is in journey" do
     oystercard.touch_in
-    oystercard.in_journey?
-    expect(oystercard.in_use).to eq true
+    expect(oystercard.in_journey?).to eq true#
 end
 
   it "does not allow to touch in when balance is less than £1" do
@@ -62,7 +61,7 @@ end
 
   it "saves the origin station" do
     oystercard.touch_in
-    expect(oystercard.entry_station).not_to eq ""
+    expect(oystercard.entry_station).not_to eq nil
   end
 end
 
@@ -76,11 +75,11 @@ describe '#touch_out' do
   it "allows a user to touch out at a station" do
     oystercard.touch_in
     oystercard.touch_out
-    expect(oystercard.in_use).to eq false
+    expect(oystercard.in_journey?).to eq false#
   end
 
   it "raises an error if card is not in use" do
-    expect(oystercard.in_use).to eq false
+    expect(oystercard.in_journey?).to eq false#
     expect{ oystercard.touch_out }.to raise_error "Already touched out"
   end
 
@@ -92,7 +91,7 @@ describe '#touch_out' do
   it "expects the length to change by -1" do
     oystercard.touch_in
     oystercard.touch_out
-    expect(oystercard.entry_station).to eq ""
+    expect(oystercard.entry_station).to eq nil
 end
 end
 
